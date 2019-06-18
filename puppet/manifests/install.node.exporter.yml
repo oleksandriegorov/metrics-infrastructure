@@ -1,3 +1,15 @@
 class { 'prometheus::node_exporter':
     collectors_enable => ['tcpstat'],
+    extra_options => '--collector.textfile.directory /etc/node-exporter-textfile.d'
+}
+
+file { '/etc/node-exporter-textfile.d':
+  ensure => directory,
+  mode    => '0644',
+}
+file { '/etc/node-exporter-textfile.d/custominfo.prom':
+  ensure  => present,
+  mode    => '0644',
+  content => "nodefacts_role{role=\"webserver\"} 1\nnodefacts_hostname{hostname=\"$hostname\"} 1\n",
+  notify => Service['node_exporter'],
 }
