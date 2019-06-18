@@ -1,0 +1,22 @@
+class { 'grafana': }
+
+grafana_plugin { 'grafana-piechart-panel':
+  ensure => present,
+}
+
+grafana_dashboard { 'node_exporter_complex_dash':
+  grafana_url       => 'http://localhost:3000',
+  grafana_user      => 'admin',
+  grafana_password  => 'admin',
+  content           => template('/puppet/grafana/templates/sample_node_exporter_not_mine.json'),
+}
+
+grafana_datasource { 'Prometheus-instance':
+  grafana_url      => 'http://localhost:3000',
+  grafana_user     => 'admin',
+  grafana_password => 'admin',
+  type             => 'prometheus',
+  url              => 'http://13.13.13.11:9090',
+  access_mode      => 'proxy',
+  is_default       => true,
+}

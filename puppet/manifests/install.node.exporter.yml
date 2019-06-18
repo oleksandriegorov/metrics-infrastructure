@@ -1,0 +1,3 @@
+class { 'prometheus::node_exporter':
+    collectors_enable => ['tcpstat'],
+}
