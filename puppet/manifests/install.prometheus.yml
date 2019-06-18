@@ -23,7 +23,7 @@ class { 'prometheus::server':
         'scrape_interval' => '10s',
         'scrape_timeout'  => '10s',
         'static_configs'  => [
-        { 'targets' => [ '13.13.13.13:9100' ],
+        { 'targets' => [ '13.13.13.13:9100','13.13.13.12:9100' ],
        }
       ]
     },
