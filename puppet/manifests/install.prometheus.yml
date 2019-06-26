@@ -27,6 +27,14 @@ class { 'prometheus::server':
        }
       ]
     },
+      { 'job_name' => 'infra',
+        'scrape_interval' => '10s',
+        'scrape_timeout'  => '10s',
+        'static_configs'  => [
+        { 'targets' => [ '13.13.13.10:9100','13.13.13.11:9100' ],
+       }
+      ]
+    },
 
   ]
 }

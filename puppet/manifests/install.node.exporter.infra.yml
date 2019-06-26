@@ -10,6 +10,6 @@ file { '/etc/node-exporter-textfile.d':
 file { '/etc/node-exporter-textfile.d/custominfo.prom':
   ensure  => present,
   mode    => '0644',
-  content => "nodefacts_system{role=\"webserver\",hostname=\"$hostname\",cluster=\"13\"} 1\n",
+  content => "nodefacts_system{role=\"infrastructure\",hostname=\"$hostname\",cluster=\"13\"} 1\n",
   notify => Service['node_exporter'],
 }

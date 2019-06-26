@@ -11,6 +11,13 @@ grafana_dashboard { 'node_exporter_complex_dash':
   content           => template('/puppet/grafana/templates/sample_node_exporter_not_mine.json'),
 }
 
+grafana_dashboard { 'my_custom_dash':
+  grafana_url       => 'http://localhost:3000',
+  grafana_user      => 'admin',
+  grafana_password  => 'admin',
+  content           => template('/puppet/grafana/templates/my_custom_dash.json'),
+}
+
 grafana_datasource { 'Prometheus-instance':
   grafana_url      => 'http://localhost:3000',
   grafana_user     => 'admin',
