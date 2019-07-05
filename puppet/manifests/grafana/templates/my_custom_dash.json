@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1561583464996,
+  "iteration": 1562358879702,
   "links": [],
   "panels": [
     {
@@ -39,8 +39,8 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 4,
-        "w": 5,
+        "h": 8,
+        "w": 12,
         "x": 0,
         "y": 0
       },
@@ -79,14 +79,13 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "Value",
+      "tableColumn": "Value #A",
       "targets": [
         {
-          "expr": "count(count(count(node_cpu * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster}) without (mode)) without (cpu))",
-          "format": "table",
-          "interval": "",
+          "expr": "count(count(count(node_cpu * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster}) without (mode)) without (cpu))",
+          "format": "time_series",
           "intervalFactor": 1,
-          "refId": "A"
+          "refId": "B"
         }
       ],
       "thresholds": "1000",
@@ -125,9 +124,9 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 4,
-        "w": 5,
-        "x": 5,
+        "h": 8,
+        "w": 12,
+        "x": 12,
         "y": 0
       },
       "id": 9,
@@ -203,7 +202,7 @@
         "h": 8,
         "w": 22,
         "x": 0,
-        "y": 4
+        "y": 8
       },
       "id": 6,
       "legend": {
@@ -238,7 +237,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(node_load1 * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster}) by (node_load1)\n/\nsum(count(count(node_cpu) without (mode)) without (cpu) * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster})",
+          "expr": "avg(node_load1 * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster}) by (node_load1)\n/\nsum(count(count(node_cpu) without (mode)) without (cpu) * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -247,7 +246,7 @@
           "refId": "A"
         },
         {
-          "expr": "avg(node_load5 * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster}) by (node_load1)\n/\nsum(count(count(node_cpu) without (mode)) without (cpu) * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster})",
+          "expr": "avg(node_load5 * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster}) by (node_load1)\n/\nsum(count(count(node_cpu) without (mode)) without (cpu) * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -255,7 +254,7 @@
           "refId": "B"
         },
         {
-          "expr": "avg(node_load15 * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster}) by (node_load1)\n/\nsum(count(count(node_cpu) without (mode)) without (cpu) * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster})",
+          "expr": "avg(node_load15 * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster}) by (node_load1)\n/\nsum(count(count(node_cpu) without (mode)) without (cpu) * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "15min",
@@ -340,7 +339,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 16
       },
       "id": 4,
       "legend": {
@@ -371,7 +370,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(rate(node_cpu[5m]) * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster}) by (mode)\n",
+          "expr": "avg(rate(node_cpu[5m]) * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster}) by (mode)\n",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -433,7 +432,7 @@
         "h": 8,
         "w": 21,
         "x": 0,
-        "y": 20
+        "y": 24
       },
       "id": 2,
       "legend": {
@@ -466,7 +465,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(\n  sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=$stype}) \n  -\n  (\n    sum(node_memory_MemFree * on (instance) nodefacts_system{cluster=$cluster,role=$stype})\n  +\n    sum(node_memory_Buffers * on (instance) nodefacts_system{cluster=$cluster,role=$stype})\n  +\n    sum(node_memory_Cached * on (instance) nodefacts_system{cluster=$cluster,role=$stype})\n  )\n)\n/\nsum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=$stype})",
+          "expr": "(\n  sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]}) \n  -\n  (\n    sum(node_memory_MemFree * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})\n  +\n    sum(node_memory_Buffers * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})\n  +\n    sum(node_memory_Cached * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})\n  )\n)\n/\nsum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -476,7 +475,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum(node_memory_MemFree * on (instance) nodefacts_system{cluster=$cluster,role=$stype})\n/sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=$stype})",
+          "expr": "sum(node_memory_MemFree * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})\n/sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -484,7 +483,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(node_memory_Buffers * on (instance) nodefacts_system{cluster=$cluster,role=$stype})\n/sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=$stype})",
+          "expr": "sum(node_memory_Buffers * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})\n/sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -492,7 +491,7 @@
           "refId": "C"
         },
         {
-          "expr": "sum(node_memory_Cached * on (instance) nodefacts_system{cluster=$cluster,role=$stype})\n/sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=$stype})",
+          "expr": "sum(node_memory_Cached * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})\n/sum(node_memory_MemTotal * on (instance) nodefacts_system{cluster=$cluster,role=~[[stype]]})",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -542,8 +541,110 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "id": 11,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "hideZero": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": null,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null as zero",
+      "options": {},
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "avg(node_tcp_connection_states * on (instance) group_left nodefacts_system{role=~[[stype]],cluster=$cluster}) by (state)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{state}}",
+          "refId": "A"
+        },
+        {
+          "expr": "max(node_tcp_connection_states * on (instance) group_left nodefacts_system{role=$stype,cluster=$cluster}) by (state) * -1",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Average TCP connections states",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
+  "refresh": false,
   "schemaVersion": 18,
   "style": "dark",
   "tags": [],
@@ -582,22 +683,27 @@
         "useTags": false
       },
       {
-        "allValue": null,
+        "allValue": "\".*\"",
         "current": {
           "tags": [],
-          "text": "\"infrastructure\"",
-          "value": "\"infrastructure\""
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "Prometheus-instance",
         "definition": "nodefacts_system",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": null,
         "multi": false,
         "name": "stype",
         "options": [
           {
             "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
             "text": "\"infrastructure\"",
             "value": "\"infrastructure\""
           },
@@ -652,5 +758,5 @@
   "timezone": "",
   "title": "my_custom_dash",
   "uid": "W7tHZK4Wz",
-  "version": 11
+  "version": 20
 }
